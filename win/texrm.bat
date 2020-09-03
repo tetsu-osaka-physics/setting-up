@@ -1,0 +1,10 @@
+del /f /s /q *.aux
+del /f /s /q *.dvi
+del /f /s /q *.fdb_latexmk
+del /f /s /q *.fls
+del /f /s /q *.synctex.gz
+del /f /s /q *.log
+del /f /s /q *.toc
+del /f /s /q *.nav
+del /f /s /q *.out
+del /f /s /q *.snm
