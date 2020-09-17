@@ -16,10 +16,9 @@ brew tap caskroom/cask
 ## データの取得
 ネットに上げてるデータを取得します．ターミナルで以下の文章を打ってください：
 ```sh
-brew install git
 git clone https://github.com/tetsu-osaka-physics/setting-up.git ~/FOR
 ```
-必要なデータが`~/FOR`に入ります．
+必要なデータが`~/FOR`に入ります（`git`が無いって言われたら，`brew install git`で入れる）．
 
 ## ghostscriptの導入
 ターミナル：
