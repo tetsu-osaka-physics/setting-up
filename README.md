@@ -8,10 +8,6 @@
 ```
 **注意** ターミナルで`Password: `と言う風にパスワードを求められることがあります．
 Macに設定しているパスワードを入力してください（自分が打った文字は出てこない）．
-次にHomebrew caskをインストールします．ターミナル：
-```sh
-brew tap caskroom/cask
-```
 
 ## データの取得
 ネットに上げてるデータを取得します．ターミナルで以下の文章を打ってください：
@@ -20,14 +16,7 @@ git clone https://github.com/tetsu-osaka-physics/setting-up.git ~/FOR
 ```
 必要なデータが`~/FOR`に入ります（`git`が無いって言われたら，`brew install git`で入れる）．
 
-## ghostscriptの導入
-ターミナル：
-```sh
-brew install ghostscript
-```
-
-## mactex導入
-ターミナル：
+## mactexの導入
 ```sh
 brew cask install mactex
 ```
