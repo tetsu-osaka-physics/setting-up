@@ -1,5 +1,5 @@
 #!/bin/sh
-brew update && brew upgrade --greedy && brew cleanup
+brew update && brew upgrade --greedy && brew cleanup --prune=all
 sudo tlmgr update --self --all
 sudo rm -rf /usr/local/texlive/texmf-local/tex/latex/local/tetsu_physic
 cd /usr/local/texlive/texmf-local/tex/latex/local
