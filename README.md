@@ -17,8 +17,9 @@ git clone https://github.com/tetsu-osaka-physics/setting-up.git ~/FOR
 必要なデータが`~/FOR`に入ります（`git`が無いって言われたら，`brew install git`で入れる）．
 
 ## mactexの導入
+<!-- brew cask install mactex -->
 ```sh
-brew cask install mactex
+brew cask install mactex-no-gui
 ```
 
 ## Atomの導入
