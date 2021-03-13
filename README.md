@@ -67,7 +67,7 @@ cp ~/FOR/latexmkrc ~/.latexmkrc
 ## inkscapeの導入
 ターミナル：
 ```sh
-brew cask install inkscape
+brew install inkscape --cask
 ```
 図の細かい話は[wiki](https://github.com/tetsu-osaka-physics/tetsu_physic/wiki/figure)参照．
 
