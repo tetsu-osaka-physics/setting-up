@@ -10,27 +10,26 @@
 Macに設定しているパスワードを入力してください（自分が打った文字は出てこない）．
 
 ## データの取得
-ネットに上げてるデータを取得します．ターミナルで以下の文章を打ってください：
+ネットに上げてるデータを取得します．ターミナルで以下の文章を打ってください（全部コピペでok）：
 ```sh
+brew install git
 git clone https://github.com/tetsu-osaka-physics/setting-up.git ~/FOR
 ```
-必要なデータが`~/FOR`に入ります（`git`が無いって言われたら，`brew install git`で入れる）．
+必要なデータが`~/FOR`に入ります．
 
 ## mactexの導入
-<!-- brew cask install mactex -->
 ```sh
-brew cask install mactex-no-gui
+brew install mactex-no-gui --cask
 ```
 
 ## Atomの導入
-<!-- 先程のステップでTeXディストリビューションのインストールが終わり，標準のエディタとしてTeX Shopが入っていると思います． -->
-個人的にがAtomが好きなので，Atomの設定をします．
+Atom（エディター）の設定をします．
 ターミナル：
 ```sh
-brew cask install atom
+brew install atom --cask
 apm install language-latex latexer latextools latex pdf-view
 ```
-Atomを開いて，`command+,`で設定に行く．Packagesを開いてlatexパッケージを開きます．
+Atomを開いて，`command + ,`で設定に行く．Packagesの項目からlatexパッケージを選択．
 そのSettingsで次のように設定します．
 - Tex Path: `/usr/local/texlive/2020/bin/x86_64-darwin`
 - Engine: `platex`
@@ -50,7 +49,7 @@ sudo cjk-gs-integrate-macos --link-texmf
 sudo mktexlsr
 sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron
 ```
-古いコマンド（pretesの時用）：
+古いコマンド（pretesの時用．**普通はやらなくてok**）：
 ```sh
 sudo cp -r ~/FOR/texmf-local/fonts/map /usr/local/texlive/texmf-local/fonts
 sudo cp -R ~/FOR/texmf-local/fonts/opentype /usr/local/texlive/texmf-local/fonts/opentype
@@ -72,7 +71,11 @@ brew cask install inkscape
 ```
 図の細かい話は[wiki](https://github.com/tetsu-osaka-physics/tetsu_physic/wiki/figure)参照．
 
-## 不要ファイルの削除
+## 特殊styの設定
+鉄緑独自のアレな教材を作るための設定をする．
+[これ](https://github.com/tetsu-osaka-physics/tetsu_physic/blob/master/README.md/#初回導入時の設定)参照．
+
+## 不要ファイルの削除コマンド（推奨）
 ターミナル：
 ```sh
 cp ~/FOR/autodelete.sh ~/Desktop/autodelete.sh
@@ -80,7 +83,7 @@ cd ~/Desktop
 chmod a+x autodelete.sh
 ```
 TeXでコンパイルすると，不要な中間ファイル（`.aux`など）が生成されます．
-デスクトップにできた`autodelete.sh`を開けば勝手に削除してくれます．
+デスクトップにできた`autodelete.sh`を開けば勝手に削除してくれます（ターミナルから開くように設定）．
 
 **ターミナルで使いたい人向け**
 ターミナル：
@@ -133,9 +136,10 @@ cp -R ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/tetex/share/texmf/fon
 /usr/local/tetex/bin/mktexlsr
 ``` -->
 次に，鉄TeXをアップデートしましょう．
-`command+K`で`afp://192.168.20.5`に繋いで，ユーザーのマウントに入った後に，鉄TeXアップローダーをクリックすればできます．
+`command + k`で`afp://192.168.20.5`に繋いで，「ユーザー」に入った後に，鉄TeXアップローダーをクリックすればできます．
 <!-- アップデートしたらstyが見つからないエラーが多分起こるので，デスクトップの`styhelp.sh`を実行すれば良い． -->
 <!-- アップデートすればフォントやstyのエラーは発生しない(2020/9/3)． -->
+<!-- mktexlsrしたのが原因だった(2021/3/13)． -->
 
 鉄TeXを使う時はAtomのlatexパッケージで
 - Path: `/usr/local/tetex/bin`
@@ -152,24 +156,20 @@ cp -R ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/tetex/share/texmf/fon
 ```
 でpdfにできる．
 
-## 特殊styの設定
-鉄緑独自のアレな教材を作るための設定をする．
-[これ](https://github.com/tetsu-osaka-physics/tetsu_physic/blob/master/README.md/#初回導入時の設定)参照．
-
 ## トラブルシューティング
 ### Atom
 #### コンパイル
-Atomでコンパイル(`ctrl+alt+b`)しようとするとlatexでのコンパイルになりエラーが出る，もしくは勝手にソースファイルのレイアウトが変わる．
+Atomでコンパイル(`ctrl + alt + b`)しようとするとlatexでのコンパイルになりエラーが出る，もしくは勝手にソースファイルのレイアウトが変わる．
 
-　&rarr;texを編集している状態のAtomで`command+.`でkey bind resolverを開き，`ctrl+alt+b`と打つ．
-この時に，最上位にlatexが来ていなければkey bindが原因．`command+,`で設定＞Keybindings＞your keymap file（上の方の大文字）で`keymap.cson`を開き，最後に
+　&rarr;texを編集している状態のAtomで`command + .`でkey bind resolverを開き，`ctrl + alt + b`と打つ．
+この時に，最上位にlatexが来ていなければkey bindが原因．`command + ,`で設定&rarr;Keybindings&rarr;your keymap file（上の方の大文字）で`keymap.cson`を開き，最後に
 ```CSON
 'atom-text-editor[data-grammar~="latex"]':'ctrl-alt-b': 'latex:build'
 ```
 を付け加える．
 
 #### `\]`が勝手に出てくる
-設定(`command+,`)を開き，Packages&rarr;latexerを選択して，Autocomplete environmentsを外す．
+設定(`command + ,`)を開き，Packages&rarr;latexerを選択して，Autocomplete environmentsを外す．
 
 ### 鉄TeXのエラー
 #### TestuTeXアップデーターが使えない
