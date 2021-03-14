@@ -6,8 +6,13 @@
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
-**注意** ターミナルで`Password: `と言う風にパスワードを求められることがあります．
+**注意１** ターミナルで`Password: `と言う風にパスワードを求められることがあります．
 Macに設定しているパスワードを入力してください（自分が打った文字は出てこない）．
+
+**注意２** （2020年以降のmacで）ターミナルで`brew`と打ち込んで，`zsh: command not found: brew`となった場合は，ターミナル：
+```sh
+echo export PATH="/opt/homebrew/bin:\$PATH" >> ~/.zshrc
+```
 
 ## データの取得
 ネットに上げてるデータを取得します．ターミナルで以下の文章を打ってください（全部コピペでok）：
