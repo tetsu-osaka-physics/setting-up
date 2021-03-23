@@ -36,11 +36,11 @@ apm install language-latex latexer latextools latex pdf-view
 ```
 Atomを開いて，`command + ,`で設定に行く．Packagesの項目からlatexパッケージを選択．
 そのSettingsで次のように設定します．
-- Tex Path: `/usr/local/texlive/2020/bin/x86_64-darwin`
+<!-- - Tex Path: `/usr/local/texlive/2020/bin/x86_64-darwin` -->
 - Engine: `platex`
 - Opner: `pdf-view`
 
-**もしtexlive202Xが出たら，texlive/202X/で設定！**
+<!-- **もしtexlive202Xが出たら，texlive/202X/で設定！** -->
 
 ## dvipdfmxのフォント埋め込み設定
 ターミナル：
@@ -54,14 +54,14 @@ sudo cjk-gs-integrate-macos --link-texmf
 sudo mktexlsr
 sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron
 ```
-古いコマンド（pretesの時用．**普通はやらなくてok**）：
+<!-- 古いコマンド（pretesの時用．**普通はやらなくてok**）：
 ```sh
 sudo cp -r ~/FOR/texmf-local/fonts/map /usr/local/texlive/texmf-local/fonts
 sudo cp -R ~/FOR/texmf-local/fonts/opentype /usr/local/texlive/texmf-local/fonts/opentype
 sudo mktexlsr
 sudo kanji-config-updmap-sys hiragino-highsierra
 sudo mktexlsr
-```
+``` -->
 
 ## latexmkの設定
 ターミナル：
