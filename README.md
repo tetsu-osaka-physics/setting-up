@@ -77,8 +77,14 @@ brew install inkscape --cask
 図の細かい話は[wiki](https://github.com/tetsu-osaka-physics/tetsu_physic/wiki/figure)参照．
 
 ## 特殊styの設定
-鉄緑独自のアレな教材を作るための設定をする．
-[これ](https://github.com/tetsu-osaka-physics/tetsu_physic/blob/master/README.md/#初回導入時の設定)参照．
+ターミナル：
+```sh
+cp ~/FOR/get-sty.sh ~/Desktop/get-sty.sh
+chmod a+x ~/Desktop/get-sty.sh
+~/Desktop/get-sty.sh
+```
+アップデートの際はデスクトップ上の`get-sty.sh`を**ターミナルから**開く．パスワードを求められる．
+<!-- [これ](https://github.com/tetsu-osaka-physics/tetsu_physic/blob/master/README.md/#初回導入時の設定)参照． -->
 
 ## 不要ファイルの削除コマンド（推奨）
 ターミナル：
@@ -153,7 +159,7 @@ cp -R ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/tetex/share/texmf/fon
 
 ターミナルからやるなら，
 ```sh
-/usr/local/tetex/bin/uplatex hoge.tex
+/usr/local/tetex/bin/uplatex --shell-escape hoge.tex
 ```
 でコンパイルして
 ```sh
