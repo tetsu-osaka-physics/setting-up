@@ -54,14 +54,14 @@ sudo cjk-gs-integrate-macos --link-texmf
 sudo mktexlsr
 sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron
 ```
-<!-- 古いコマンド（pretesの時用．**普通はやらなくてok**）：
+代替コマンド（*上のやつやっても上手く行かない場合は試す*）：
 ```sh
 sudo cp -r ~/FOR/texmf-local/fonts/map /usr/local/texlive/texmf-local/fonts
-sudo cp -R ~/FOR/texmf-local/fonts/opentype /usr/local/texlive/texmf-local/fonts/opentype
+sudo cp -R ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/texlive/texmf-local/fonts/opentype/
 sudo mktexlsr
-sudo kanji-config-updmap-sys hiragino-highsierra
+sudo kanji-config-updmap-sys hiragino-highsierra-pron
 sudo mktexlsr
-``` -->
+```
 
 ## latexmkの設定
 ターミナル：
