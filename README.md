@@ -36,11 +36,8 @@ apm install language-latex latexer latextools latex pdf-view
 ```
 Atomを開いて，`command + ,`で設定に行く．Packagesの項目からlatexパッケージを選択．
 そのSettingsで次のように設定します．
-<!-- - Tex Path: `/usr/local/texlive/2020/bin/x86_64-darwin` -->
 - Engine: `platex`
 - Opner: `pdf-view`
-
-<!-- **もしtexlive202Xが出たら，texlive/202X/で設定！** -->
 
 ## dvipdfmxのフォント埋め込み設定
 ターミナル：
@@ -57,7 +54,7 @@ sudo kanji-config-updmap-sys --jis2004 hiragino-highsierra-pron
 代替コマンド（*上のやつやっても上手く行かない場合は試す*）：
 ```sh
 sudo cp -r ~/FOR/texmf-local/fonts/map /usr/local/texlive/texmf-local/fonts
-sudo cp -R ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/texlive/texmf-local/fonts/opentype/
+sudo cp -r ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/texlive/texmf-local/fonts/opentype/
 sudo mktexlsr
 sudo kanji-config-updmap-sys hiragino-highsierra-pron
 sudo mktexlsr
@@ -84,7 +81,6 @@ chmod a+x ~/Desktop/get-sty.sh
 ~/Desktop/get-sty.sh
 ```
 アップデートの際はデスクトップ上の`get-sty.sh`を**ターミナルから**開く．パスワードを求められる．
-<!-- [これ](https://github.com/tetsu-osaka-physics/tetsu_physic/blob/master/README.md/#初回導入時の設定)参照． -->
 
 ## 不要ファイルの削除コマンド（推奨）
 ターミナル：
@@ -141,7 +137,7 @@ chmod a+x styhelp.sh
 これで`styhelp.sh`がデスクトップに保存されるので，あとは実行するだけ（アップデートした後もこれを実行する）． -->
 <!-- ヒラギノフォントの埋め込みは，
 ```sh
-cp -R ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/tetex/share/texmf/fonts/opentype
+cp -r ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/tetex/share/texmf/fonts/opentype
 /usr/local/tetex/bin/mktexlsr
 /usr/local/tetex/bin/updmap-sys
 /usr/local/tetex/bin/mktexlsr
@@ -172,7 +168,7 @@ cp -R ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/tetex/share/texmf/fon
 #### コンパイル
 Atomでコンパイル(`ctrl + alt + b`)しようとするとlatexでのコンパイルになりエラーが出る，もしくは勝手にソースファイルのレイアウトが変わる．
 
-　&rarr;texを編集している状態のAtomで`command + .`でkey bind resolverを開き，`ctrl + alt + b`と打つ．
+&rarr;texを編集している状態のAtomで`command + .`でkey bind resolverを開き，`ctrl + alt + b`と打つ．
 この時に，最上位にlatexが来ていなければkey bindが原因．`command + ,`で設定&rarr;Keybindings&rarr;your keymap file（上の方の大文字）で`keymap.cson`を開き，最後に
 ```CSON
 'atom-text-editor[data-grammar~="latex"]':'ctrl-alt-b': 'latex:build'
@@ -181,6 +177,12 @@ Atomでコンパイル(`ctrl + alt + b`)しようとするとlatexでのコン�
 
 #### `\]`が勝手に出てくる
 設定(`command + ,`)を開き，Packages&rarr;latexerを選択して，Autocomplete environmentsを外す．
+
+#### pdfが出てこない
+&rarr;ターミナル：
+```sh
+echo "PDFJS.disableWorker = true;" >> ~/.atom/packages/pdf-view/lib/pdf-editor-view.js
+```
 
 ### 鉄TeXのエラー
 #### TestuTeXアップデーターが使えない
@@ -255,14 +257,14 @@ kanji-config-updmap-sys ms
 ### kozuka-pr6n（推奨）
 1. Adobe Acrobat Readerをダウンロード．
 
-2. `C:\Program Files (x86)\Adobe\Acrobat Reader DC\Resource\CIDFont`にある`KozGoPr6N-Medium.otf`と`KozMinPr6N-Regular.otf`を管理者権限で全ユーザーにインストール．
+2. `C:\Program Files (x86)\Adobe\Acrobat Reader DC\Resource\CIDFont`にある`KozGoPr6N-Medium.otf`と`KozMinPr6N-regular.otf`を管理者権限で全ユーザーにインストール．
 
 3. コマンドプロンプト（管理者）：
   ```batchfile
   updmap-sys --setoption kanjiEmbed kozuka-pr6n
   mkdir C:\texlive\texmf-local\fonts\opentype\kozuka
-  mklink C:\texlive\texmf-local\fonts\opentype\kozuka\KozMinPr6N-Regular.otf C:\Windows\Fonts\KozMinPr6N-Regular.otf
-  mklink C:\texlive\texmf-local\fonts\opentype\kozuka\KozGoPr6N-Regular.otf C:\Windows\Fonts\KozGoPr6N-Medium.otf
+  mklink C:\texlive\texmf-local\fonts\opentype\kozuka\KozMinPr6N-regular.otf C:\Windows\Fonts\KozMinPr6N-regular.otf
+  mklink C:\texlive\texmf-local\fonts\opentype\kozuka\KozGoPr6N-regular.otf C:\Windows\Fonts\KozGoPr6N-Medium.otf
   mklink C:\texlive\texmf-local\fonts\opentype\kozuka\KozMinPr6N-Bold.otf C:\Windows\Fonts\KozGoPr6N-Medium.otf
   mklink C:\texlive\texmf-local\fonts\opentype\kozuka\KozGoPr6N-Bold.otf C:\Windows\Fonts\KozGoPr6N-Medium.otf
   ```
