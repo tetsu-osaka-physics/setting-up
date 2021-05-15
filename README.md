@@ -250,7 +250,7 @@ kanji-config-updmap-sys ipa
 
 ### ipaex
 ```batchfile
-kanji-config-updmap-sys ms
+kanji-config-updmap-sys ipaex
 ```
 使い物にならない．
 
