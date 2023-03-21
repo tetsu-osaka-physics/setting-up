@@ -1,7 +1,13 @@
 # setting-up
 物理科で教材を作成する為に必要なmacの環境構築です．
 
-## Homebrewの導入
+- [インストール](#install)
+- [コンパイル](#compile)
+- [鉄TeX](#鉄tex任意)
+- [トラブルシューティング](#トラブルシューティング)
+
+## Install
+### Homebrew
 ターミナル：
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -14,7 +20,7 @@ Macに設定しているパスワードを入力してください（自分が�
 echo export PATH="/opt/homebrew/bin:\$PATH" >> ~/.zshrc
 ```
 
-## データの取得
+### データの取得
 ネットに上げてるデータを取得します．ターミナルで以下の文章を打ってください（全部コピペでok）：
 ```sh
 brew install git
@@ -22,24 +28,71 @@ git clone https://github.com/tetsu-osaka-physics/setting-up.git ~/FOR
 ```
 必要なデータが`~/FOR`に入ります．
 
-## mactexの導入
+### mactex
 ```sh
 brew install mactex-no-gui --cask
 ```
 
-## Atomの導入
-Atom（エディター）の設定をします．
+### VS Code
+VS Code（エディター）の設定をします．
 ターミナル：
 ```sh
-brew install atom --cask
-apm install language-latex latexer latextools latex pdf-view
+brew install visual-studio-code
+code --install-extension James-Yu.latex-workshop
 ```
-Atomを開いて，`command + ,`で設定に行く．Packagesの項目からlatexパッケージを選択．
-そのSettingsで次のように設定します．
-- Engine: `platex`
-- Opner: `pdf-view`
+VS Codeを開いて，`command+,`を押してSettingを開く．右上のOpen Settings (JSON)をクリック
+![JSON](img/setting_json.png)
+`settings.json`に以下のコードをコピペ
+```JSON
+{
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk-platex",
+            "tools": ["latexmk-platex"]
+        },
+        {
+            "name": "tetsu-uplatex",
+            "tools": ["tetsu-uplatex", "tetsu-dvipdfmx"]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk-platex",
+            "command": "latexmk",
+            "args": [
+                "-latex=platex",
+                "-synctex=1",
+                "--halt-on-error",
+                "-pdfdvi",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "tetsu-uplatex",
+            "command": "/usr/local/tetex/bin/uplatex",
+            "args": [
+                "--halt-on-error",
+                "--shell-escape",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "tetsu-dvipdfmx",
+            "command": "/usr/local/tetex/bin/dvipdfmx",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.viewer.pdf.internal.port": 0,
+}
+```
 
-## dvipdfmxのフォント埋め込み設定
+### dvipdfmxのフォント埋め込み設定
 ターミナル：
 ```sh
 sudo tlmgr update --self --all
@@ -60,18 +113,11 @@ sudo kanji-config-updmap-sys hiragino-highsierra-pron
 sudo mktexlsr
 ```
 
-## latexmkの設定
+### latexmkの設定
 ターミナル：
 ```sh
 cp ~/FOR/latexmkrc ~/.latexmkrc
 ```
-
-## inkscapeの導入
-ターミナル：
-```sh
-brew install inkscape --cask
-```
-図の細かい話は[wiki](https://github.com/tetsu-osaka-physics/tetsu_physic/wiki/figure)参照．
 
 ## 特殊styの設定
 ターミナル：
@@ -81,6 +127,8 @@ chmod a+x ~/Desktop/get-sty.sh
 ~/Desktop/get-sty.sh
 ```
 アップデートの際はデスクトップ上の`get-sty.sh`を**ターミナルから**開く．パスワードを求められる．
+<a target="_blank" href="https://github.com/tetsu-osaka-physics/tetsu_physic#%E5%88%9D%E5%9B%9E%E5%B0%8E%E5%85%A5%E6%99%82%E3%81%AE%E8%A8%AD%E5%AE%9A">代替方法１</a>
+<a target="_blank" href="https://github.com/tetsu-osaka-physics/tetsu_physic/wiki/develop#%E3%83%AD%E3%83%BC%E3%82%AB%E3%83%AB%E3%81%B8%E3%81%AEclone">代替方法２</a>
 
 ## 不要ファイルの削除コマンド（推奨）
 ターミナル：
@@ -100,14 +148,40 @@ chmod a+x /usr/local/bin/autodelete.sh
 ```
 あとは，ターミナル上で`autodelete`と打てば実行される．例：
 ```sh
-cd GoogleDrive/tetsu/h2p
+cd SynologyDrive/tetsu/h2p
 autodelete
 ```
-この場合，`GoogleDrive/tetsu/h2p`以下のディレクトリだけを検索・削除対象にするので早く終わる．
+この場合，`SynologyDrive/tetsu/h2p`以下のディレクトリだけを検索・削除対象にするので早く終わる．
 
-## 鉄TeXの導入（任意）
-ここまでで，普段の復習テストから校内模試の問題と解答まで全て作ることができますが，講評に関しては，鉄TeXで作る必要があります．
-ただ，鉄TeXは年に２度しか使わないし，共用のMacでも使えるから，わざわざ入れる必要はない．
+### inkscape
+ターミナル：
+```sh
+brew install inkscape --cask
+```
+図の細かい話は[wiki](https://github.com/tetsu-osaka-physics/tetsu_physic/wiki/figure)参照．
+
+## Compile
+`command+option+b`でcompile．`command+option+v`でpdf表示．
+もしくは右上の三角形のボタンでcompile，その隣のボタンでpdf表示．
+
+![compile](./img/normal/build.png)
+
+Compile中の動作
+![building](./img/normal/status_building.png)
+
+成功：
+![success](img/normal/status_success.png)
+
+失敗：
+![fail](img/normal/status_fail.png)
+
+pdf表示
+![pdf](img/normal/show_pdf.png)
+
+
+## 鉄TeX（任意）
+### Install
+校内模試講評・H2問題集に関しては，鉄TeXで作る必要があります（ただし，鉄TeXは年に２度しか使わないし，共用のMacでも使えるから，わざわざ入れる必要はない）．
 サーバーにつないだ状態で，
 ```sh
 cp /Volumes/1_ユーザ_Osaka/00_共通/98_鉄TeX/TeXインストール用ファイル/TetsuTeX.dmg ~/Desktop/
@@ -148,10 +222,35 @@ cp -r ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/tetex/share/texmf/fon
 <!-- アップデートすればフォントやstyのエラーは発生しない(2020/9/3)． -->
 <!-- mktexlsrしたのが原因だった(2021/3/13)． -->
 
-鉄TeXを使う時はAtomのlatexパッケージで
+### Compile
+<!-- 鉄TeXを使う時はAtomのlatexパッケージで
 - Path: `/usr/local/tetex/bin`
 - Engine: `uplatex`
-に設定．
+に設定． -->
+1. 左のTeXタブからBuild LaTeX projectの`>`ボタンを押す
+2. Recipe: tetsu-uplatexを押す
+3. compileできたら右上のボタンでpdf表示
+
+TeXタブからBuild LaTeX projectを展開
+![TeXタブ選択](./img/tetsu/open_tex_tab.png)
+
+recipeの選択
+![recipe](img/tetsu/select_recipe.png)
+
+Compile中の動作
+
+![uplatex](./img/tetsu/status_uplatex.png)
+&rarr;
+![dvipdfmx](./img/tetsu/status_dvipdfmx.png)
+
+成功：
+![success](./img/tetsu/status_success.png)
+
+失敗：
+![TeXタブ選択](./img/tetsu/status_fail.png)
+
+pdf表示
+![TeXタブ選択](./img/tetsu/show_pdf.png)
 
 ターミナルからやるなら，
 ```sh
@@ -164,9 +263,29 @@ cp -r ~/FOR/texmf-local/fonts/opentype/hiragino /usr/local/tetex/share/texmf/fon
 でpdfにできる．
 
 ## トラブルシューティング
+### VS Code
+#### Compile
+&#128104;&#8205;&#128295; Compileが失敗した（左下のstatusが&#10060;）
+
+&rarr;`command+shift+U`でoutputを表示．
+![output](img/latex_outout.png)
+スクロールしてエラー箇所を見つける．
+画像の場合は
+```log
+! Undefined control sequence.
+l.4 普通の\LaTex
+                 のcompile．
+```
+4行目の`\LaTex`コマンドが未定義（正しくは`\LaTeX`）
+
+&#128104;&#8205;&#128295; Compileが終わらない
+
+&rarr;何かしらのエラー（styが見つからないとか）が起きている．
+TeXタブ&rarr;Build LaTeX project&rarr;Terminate current compilationで強制終了し，上の手順と同じくoutputを確認．
+
 ### Atom
-#### コンパイル
-Atomでコンパイル(`ctrl + alt + b`)しようとするとlatexでのコンパイルになりエラーが出る，もしくは勝手にソースファイルのレイアウトが変わる．
+#### Compile
+&#128104;&#8205;&#128295; Atomでコンパイル(`ctrl + alt + b`)しようとするとlatexでのコンパイルになりエラーが出る，もしくは勝手にソースファイルのレイアウトが変わる．
 
 &rarr;texを編集している状態のAtomで`command + .`でkey bind resolverを開き，`ctrl + alt + b`と打つ．
 この時に，最上位にlatexが来ていなければkey bindが原因．`command + ,`で設定&rarr;Keybindings&rarr;your keymap file（上の方の大文字）で`keymap.cson`を開き，最後に
@@ -175,32 +294,38 @@ Atomでコンパイル(`ctrl + alt + b`)しようとするとlatexでのコン�
 ```
 を付け加える．
 
-#### `\]`が勝手に出てくる
-設定(`command + ,`)を開き，Packages&rarr;latexerを選択して，Autocomplete environmentsを外す．
+&#128104;&#8205;&#128295; pdfが出てこない
 
-#### pdfが出てこない
 &rarr;ターミナル：
 ```sh
 echo "PDFJS.disableWorker = true;" >> ~/.atom/packages/pdf-view/lib/pdf-editor-view.js
 ```
 
-### 鉄TeXのエラー
-#### TestuTeXアップデーターが使えない
+&#128104;&#8205;&#128295; `\]`が勝手に出てくる
+
+&rarr;設定(`command + ,`)を開き，Packages&rarr;latexerを選択して，Autocomplete environmentsを外す．
+
+### 鉄TeX
+#### Update
+&#128104;&#8205;&#128295;TestuTeXアップデーターが使えない
 &rarr;サーバーに繋いだ状態で，
 ```sh
 sudo /Volumes/1_ユーザ_Osaka/00_共通/98_鉄TeX/TeXインストール用ファイル/鉄TeXアップデート.command
 ```
 と入力する．
 
-#### 鉄TeXがアップデートを強要してくる
+&#128104;&#8205;&#128295;鉄TeXがアップデートを強要してくる
 &rarr;アップデートしましょう．若しくは
 ```sh
 sed -i '' -e's/@warning@leveltwo{90}/@warning@leveltwo{10000}/g' /usr/local/tetex/share/texmf/ptex/platex/tetsutex/tetsuryoku.sty
 ```
-（各方面から怒られそう）
 
 ### Homebrewの不具合
-&rarr;Homebrewが壊れた！
+&#128104;&#8205;&#128295;なんか不具合起きてますよ
+```sh
+brew doctor
+```
+で解決策が提示されれば従う．それでも治らなければ
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall.sh)"
 ```
